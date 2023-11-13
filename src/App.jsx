@@ -4,6 +4,9 @@ import "./global.css";
 import s from "./style.module.css";
 import { BACKDROP_BASE_URL } from "./config";
 import { TVShowDetail } from "./Components/TVShowDetail/TVShowDetail";
+import { Logo } from "./Components/Logo/Logo";
+import logo from "./assets/images/logo.png";
+import { TVShowListItem } from "./Components/TVShowListItem/TVShowListItem";
 
 export function App() {
   const [currentTVShow, setCurrentTVShow] = useState();
@@ -14,6 +17,11 @@ export function App() {
     if (populars.length > 0) {
       setCurrentTVShow(populars[0]);
     }
+  }
+
+  function setTVShowFromRecommendation(tvShow)
+  {
+    alert(JSON.stringify(tvShow))
   }
 
   useEffect(() => {
@@ -32,8 +40,11 @@ export function App() {
       <div className={s.header}>
         <div className="row">
           <div className="col-4">
-            <div>Logo</div>
-            <div>Subtitle</div>
+            <Logo
+              title="Watowatch"
+              subtitle="Find a show youmay like"
+              image={logo}
+            />
           </div>
 
           <div className="col-sm-12 col-md-4">
@@ -42,9 +53,11 @@ export function App() {
         </div>
       </div>
       <div className={s.tv_show_detail}>
-        { currentTVShow && <TVShowDetail tvShow={currentTVShow} />}
+        {currentTVShow && <TVShowDetail tvShow={currentTVShow} />}
       </div>
-      <div className={s.recommendations}>Recommendations</div>
+      <div className={s.recommendations}>
+        {currentTVShow && <TVShowListItem tvShow={currentTVShow} onClick={setTVShowFromRecommendation}/>}
+      </div>
     </div>
   );
 }
