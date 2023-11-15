@@ -3,6 +3,7 @@
     cursor: pointer;
     width: 300px;
     position: relative;
+    height: 100%;
 }
 
 .image 
@@ -25,4 +26,13 @@
     overflow: hidden;
     padding-right: 20px;
     white-space: nowrap;
+}
+
+.backboneImage
+{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background-color: grey;
+    border-radius: 10px;
 }
