@@ -7,24 +7,45 @@ import { TVShowDetail } from "./Components/TVShowDetail/TVShowDetail";
 import { Logo } from "./Components/Logo/Logo";
 import logo from "./assets/images/logo.png";
 import { TVShowList } from "./Components/TVShowList/TVShowList";
+import { SearchBar } from "./Components/SearchBar/SearchBar";
 
 export function App() {
   const [currentTVShow, setCurrentTVShow] = useState();
   const [recommendationList, setRecommendationList] = useState([]);
 
   async function fetchPopulars() {
-    const populars = await TVShowAPI.fetchPopulars();
+    try {
+      const populars = await TVShowAPI.fetchPopulars();
 
-    if (populars.length > 0) {
-      setCurrentTVShow(populars[0]);
+      if (populars.length > 0) {
+        setCurrentTVShow(populars[0]);
+      }
+    } catch (error) {
+      alert(error.message);
     }
   }
 
   async function fetchRecommendations(tvShowId) {
-    const recommendations = await TVShowAPI.fetchRecommendations(tvShowId);
+    try {
+      const recommendations = await TVShowAPI.fetchRecommendations(tvShowId);
 
-    if (recommendations.length > 0) {
-      setRecommendationList(recommendations.slice(0, 10));
+      if (recommendations.length > 0) {
+        setRecommendationList(recommendations.slice(0, 10));
+      }
+    } catch (error) {
+      alert(error.message);
+    }
+  }
+
+  async function SearchTVShow(tvShowName) {
+    try {
+      const searchResponse = await TVShowAPI.fetchByTitle(tvShowName);
+
+      if (searchResponse.length > 0) {
+        setCurrentTVShow(searchResponse[0]);
+      }
+    } catch (error) {
+      alert(error.message);
     }
   }
 
@@ -58,7 +79,7 @@ export function App() {
           </div>
 
           <div className="col-sm-12 col-md-4">
-            <input style={{ width: "100%" }} type="text" />
+            <SearchBar onSubmit={SearchTVShow} />
           </div>
         </div>
       </div>
@@ -67,7 +88,10 @@ export function App() {
       </div>
       <div className={s.recommendations}>
         {recommendationList && recommendationList.length > 0 && (
-          <TVShowList tvShowList={recommendationList} />
+          <TVShowList
+            tvShowList={recommendationList}
+            onClickItem={setCurrentTVShow}
+          />
         )}
       </div>
     </div>

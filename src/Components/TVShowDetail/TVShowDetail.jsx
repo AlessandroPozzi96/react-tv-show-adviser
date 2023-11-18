@@ -2,7 +2,7 @@ import { FiveStarsRating } from "../FiveStarsRating/FiveStarsRating";
 import s from "./style.module.css";
 
 export function TVShowDetail({ tvShow }) {
-  const rating = tvShow.vote_average / 2;
+  const rating = Math.round(tvShow.vote_average / 2);
 
   return (
     <>

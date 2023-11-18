@@ -19,5 +19,5 @@ export function FiveStarsRating({ rating }) {
     starList.push(<StarEmpty key={"star-empty" + i} />);
   }
 
-  return <>{starList}</>;
+  return <div className={s.container}>{starList}</div>;
 }
